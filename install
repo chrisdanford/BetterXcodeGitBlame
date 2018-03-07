@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail  # http://redsymbol.net/articles/unofficial-bash-strict-mode/
 
 XCODE_BIN_DIR="`xcode-select -p`/usr/bin"
 XCODE_GIT="$XCODE_BIN_DIR/xcode-git"

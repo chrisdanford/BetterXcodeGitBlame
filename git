@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -euo pipefail  # http://redsymbol.net/articles/unofficial-bash-strict-mode/
+
 # A wrapper that injects the -w -M options into git blame commands.
 # https://github.com/chrisdanford/BetterXcodeGitBlame/
 
