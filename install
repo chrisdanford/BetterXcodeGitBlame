@@ -10,9 +10,9 @@ for i in "$@" ; do
 done
 
 if [[ local_install_mode -eq 0 ]]; then
-	echo 'Installing from remote source...'
+	echo 'BetterXcodeGitBlame installing from remote source...'
 else
-	echo 'Installing from local source...'
+	echo 'BetterXcodeGitBlame installing from local source...'
 fi
 
 XCODE_BIN_DIR="`xcode-select -p`/usr/bin"
