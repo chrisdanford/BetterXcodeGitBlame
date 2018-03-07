@@ -23,11 +23,11 @@ GIT_TEMP="/tmp/git-wrapper"
 LOCAL_INSTALL_GIT_SOURCE="./git"
 
 if [ -f $XCODE_GIT ]; then
-   echo "Looks like we're already installed. File "$XCODE_GIT" already exists. Halt!"
+   echo "Looks like we're already installed. File "$XCODE_GIT" already exists."
    echo ""
-   echo "You can uninstall by executing:"
+   echo "If you'd like to uninstall:"
    echo "sudo mv -f $XCODE_GIT $GIT"
-   exit 1
+   exit 0
 fi
 if [[ local_install_mode -eq 0 ]]; then
 	curl --output "$GIT_TEMP" "$GIT_URL"
