@@ -14,9 +14,9 @@ if [ -f $XCODE_GIT ]; then
    exit 1
 fi
 curl --output "$GIT_TEMP" "$GIT_URL" > $GIT_TEMP
-echo ""
-echo The contents of "$XCODE_BIN_DIR" will be modified.
-echo You may be prompted for your password. 'sudo' is necessary to continue.
+echo ''
+echo 'The contents of "$XCODE_BIN_DIR" will be modified.''
+echo 'You may be prompted for your password. "sudo" is necessary to continue.'
 sudo -- mv "$GIT" "$XCODE_GIT"
 sudo -- mv "$GIT_TEMP" "$GIT"
 sudo -- chmod +x "$GIT"

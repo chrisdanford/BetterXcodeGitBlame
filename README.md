@@ -4,11 +4,13 @@
 
 ## Installation
 
-*Warning*: This script modifies the conents of the Xcode package to wrap Xcode's internal version of git.  If you upgrade Xcode, you will need to re-run this script to restore functionality.
+*Warning*: This script modifies the conents of the Xcode package to wrap Xcode's internal version of git.
 
 ```bash
 sudo bash <(curl -s https://raw.githubusercontent.com/chrisdanford/BetterXcodeGitBlame/master/install)
 ```
+
+*Warning*: If you upgrade Xcode, you will need to re-run this script to restore functionality.
 
 ## Overview
 
@@ -16,7 +18,7 @@ Xcode's "blame" view is extremely handy.  For each line of a file, you can view 
 
 However, Xcode exposes no options to control what flags are passed to the `git blame` command, and it's hard-coded to point to an internally-bundled version of git.
 
-This installation script modified the Xcode-internal version to be wrapped by a shell script that passes some additional options to the `git blame` command:
+This installation script modified the Xcode-internal git to be wrapped by a shell script that passes some additional options for the `git blame` command:
 - `-w` to ignore whitespace-only changes
 - `-M` to ignore changes that only moved but didn't modify a line
 
