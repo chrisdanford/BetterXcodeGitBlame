@@ -25,7 +25,7 @@ This installation script modified the Xcode-internal git to be wrapped by a shel
 ## Uninstallation
 
 ```bash
-sudo mv -f /Applications/Xcode.app/Contents/Developer/usr/bin/xcode-git /Applications/Xcode.app/Contents/Developer/usr/bin/git
+sudo mv -f "`xcode-select -p`/usr/bin/xcode-git" "`xcode-select -p`/usr/bin/git"
 ```
 
 ## Authors

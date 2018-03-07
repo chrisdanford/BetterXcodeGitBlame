@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-XCODE_BIN_DIR="/Applications/Xcode.app/Contents/Developer/usr/bin"
+XCODE_BIN_DIR="`xcode-select -p`/usr/bin"
 XCODE_GIT="$XCODE_BIN_DIR/xcode-git"
 GIT="$XCODE_BIN_DIR/git"
 GIT_URL="https://raw.githubusercontent.com/chrisdanford/BetterXcodeGitBlame/master/git"
