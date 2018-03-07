@@ -7,7 +7,7 @@
 *Warning*: This script modifies the conents of the Xcode package to wrap Xcode's internal version of git.
 
 ```bash
-sudo bash <(curl -s https://raw.githubusercontent.com/chrisdanford/BetterXcodeGitBlame/master/install)
+bash <(curl -s https://raw.githubusercontent.com/chrisdanford/BetterXcodeGitBlame/master/install)
 ```
 
 *Warning*: If you upgrade Xcode, you will need to re-run this script to restore functionality.
@@ -33,7 +33,7 @@ sudo mv -f /Applications/Xcode.app/Contents/Developer/usr/bin/xcode-git /Applica
 
 ## License
 
-Copyright 2016-2018 Pinterest, Inc
+Copyright 2018 Pinterest, Inc
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
