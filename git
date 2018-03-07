@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# A wrapper that injects the -w -M options into git blame commands.
+# https://github.com/chrisdanford/BetterXcodeGitBlame/
+
+transformGitArgs () {
+	local e found_separator=0
+	for e; do
+		echo "$e"
+		if [[ "$found_separator" -eq 1 ]]; then
+			:
+		elif [[ "$e" == "--" ]]; then
+			found_separator=1
+		elif [[ "$e" == "blame" ]]; then
+			echo "-w -M"
+		fi
+	done
+}
+
+transformGitArgs "$@" | xargs git
