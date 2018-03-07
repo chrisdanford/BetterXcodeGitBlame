@@ -9,18 +9,19 @@ for i in "$@" ; do
     fi
 done
 
+REMOTE_INSTALL_GIT_URL="https://raw.githubusercontent.com/chrisdanford/BetterXcodeGitBlame/master/git"
+LOCAL_INSTALL_GIT_SOURCE="$(dirname $0)/git"
+
 if [[ local_install_mode -eq 0 ]]; then
-	echo 'BetterXcodeGitBlame installing from remote source...'
+	echo "BetterXcodeGitBlame is installing from remote source: $REMOTE_INSTALL_GIT_URL"
 else
-	echo 'BetterXcodeGitBlame installing from local source...'
+	echo "BetterXcodeGitBlame is installing from local source: $LOCAL_INSTALL_GIT_SOURCE"
 fi
 
 XCODE_BIN_DIR="`xcode-select -p`/usr/bin"
 XCODE_GIT="$XCODE_BIN_DIR/xcode-git"
 GIT="$XCODE_BIN_DIR/git"
-GIT_URL="https://raw.githubusercontent.com/chrisdanford/BetterXcodeGitBlame/master/git"
 GIT_TEMP="/tmp/git-wrapper"
-LOCAL_INSTALL_GIT_SOURCE="./git"
 
 if [ -f $XCODE_GIT ]; then
    echo "Looks like we're already installed. File "$XCODE_GIT" already exists."
@@ -30,12 +31,12 @@ if [ -f $XCODE_GIT ]; then
    exit 0
 fi
 if [[ local_install_mode -eq 0 ]]; then
-	curl --output "$GIT_TEMP" "$GIT_URL"
+	curl --output "$GIT_TEMP" "$REMOTE_INSTALL_GIT_URL"
 fi
 echo ''
 echo "Location of the Xcode-packaged git: $XCODE_BIN_DIR"
 echo ''
-echo 'The contents of Xcode will be modified.'
+echo 'WARNING: The contents of Xcode will be modified.'
 echo 'You may be prompted for your password. "sudo" is necessary to continue.'
 sudo -- mv "$GIT" "$XCODE_GIT"
 if [[ local_install_mode -eq 0 ]]; then
