@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+XCODE_BIN_DIR="/Applications/Xcode.app/Contents/Developer/usr/bin"
+XCODE_GIT="$XCODE_BIN_DIR/xcode-git"
+GIT="$XCODE_BIN_DIR/git"
+GIT_URL="https://raw.githubusercontent.com/chrisdanford/BetterXcodeGitBlame/master/git"
+GIT_TEMP="/tmp/git-wrapper"
+
+if [ -f $XCODE_GIT ]; then
+   echo "Looks like we're already installed. File "$XCODE_GIT" already exists. Halt!"
+   echo ""
+   echo "You can uninstall by executing:"
+   echo "sudo mv -f $XCODE_GIT $GIT"
+   exit 1
+fi
+curl --output "$GIT_TEMP" "$GIT_URL" > $GIT_TEMP
+echo ""
+echo The contents of "$XCODE_BIN_DIR" will be modified.
+echo You may be prompted for your password. 'sudo' is necessary to continue.
+sudo -- mv "$GIT" "$XCODE_GIT"
+sudo -- mv "$GIT_TEMP" "$GIT"
+sudo -- chmod +x "$GIT"
