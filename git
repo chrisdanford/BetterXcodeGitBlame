@@ -5,6 +5,16 @@ set -euo pipefail  # http://redsymbol.net/articles/unofficial-bash-strict-mode/
 # A wrapper that injects the -w -M options into git blame commands.
 # https://github.com/chrisdanford/BetterXcodeGitBlame/
 
+# Xcode will pass arguments to git that look like:
+#   ls-remote --heads
+# or 
+#   -w -M -c color.ui=false -c core.pager= -c core.quotepath=false --no-pager blame --no-color --line-porcelain -- SomeFile.m
+# 
+# We want to inject out extra flags into any `blame` command.
+# We'll process each arg, inject our flags when we find the one `blame` (if any)
+# and not inject once we see the `--` separator because everything after
+# the separator are file names (and there could be legitimate files with 
+# the name `blame`).
 transformGitArgs () {
 	local e found_separator=0
 	for e; do
