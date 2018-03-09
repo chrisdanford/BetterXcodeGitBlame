@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -euo pipefail  # http://redsymbol.net/articles/unofficial-bash-strict-mode/
+
+if [ "$#" -ne 1 ]; then
+	echo 'Download the latest version of BetterXcodeGitBlame to the supplied destination directory.'
+    echo "usage: download.sh <destination>"
+    exit 1
+fi
+
+set -x
+
+DESTINATION="$1"
+
+TEMP="/tmp/BetterXcodeGitBlame.zip"
+URL="https://codeload.github.com/chrisdanford/BetterXcodeGitBlame/zip/master"
+
+# Clear the contents, if any, so that old files don't hang around.
+rm -rf "$DESTINATION" || 0
+mkdir -p "$DESTINATION"
+
+# unzip isn't happy accepting the zip contents on stdin, so download to a temp file.
+curl --output "$TEMP" "$URL"
+
+# -j to junk the directory structure in the zip.
+# The zip archive bakes in a top-level directory that contains the branch name.
+# Exclude "docs".  It's a few MB and doesn't have anything necessary for install.
+unzip -j -d "$DESTINATION" "$TEMP" -x "BetterXcodeGitBlame-master/docs/*"

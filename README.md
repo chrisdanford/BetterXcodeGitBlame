@@ -2,32 +2,14 @@
 
 ![Preview of how Xcode's blame view changes](https://raw.githubusercontent.com/chrisdanford/BetterXcodeGitBlame/master/docs/example.gif "Example of how Xcode's blame view changes")
 
-## Installation
-
 *Warning*: This script modifies the conents of the Xcode package to wrap Xcode's internal version of git.
 
 *Warning*: If you upgrade Xcode, you will need to re-run this script to restore functionality.
 
+## Installation
+
 ```bash
 bash <(curl -s https://raw.githubusercontent.com/chrisdanford/BetterXcodeGitBlame/master/install)
-```
-
-Or, if you have a local copy of the repo:
-
-```bash
-./install --local
-```
-
-## Uninstallation
-
-```bash
-bash <(curl -s https://raw.githubusercontent.com/chrisdanford/BetterXcodeGitBlame/master/install) --uninstall
-```
-
-or
-
-```bash
-./install --uninstall
 ```
 
 ## Overview
@@ -39,6 +21,29 @@ However, Xcode exposes no options to control what flags are passed to the `git b
 This installation script modified the Xcode-internal git to be wrapped by a shell script that passes some additional options for the `git blame` command:
 - `-w` to ignore whitespace-only changes
 - `-M` to ignore changes that only moved but didn't modify a line
+
+## Advanced Usage
+### Upgrading
+Simply run the normal installation command, and installation will occur if the latest version is newer than the locally-installed version.
+
+### Uninstallation
+```bash
+bash <(curl -s https://raw.githubusercontent.com/chrisdanford/BetterXcodeGitBlame/master/install) --uninstall
+```
+
+### Redistibuting
+
+You may find it useful to redistribute this project and install it across multiple machines.  The `download` script and the `--local` flag to `install` aim to make this easy.
+
+```bash
+bash <(curl -s https://raw.githubusercontent.com/chrisdanford/BetterXcodeGitBlame/master/download) -- ./BetterXcodeGitBlame/
+
+# install
+./BetterXcodeGitBlame/install --local
+
+# uninstall
+./BetterXcodeGitBlame/install --uninstall
+```
 
 ## Authors
 - [Chris Danford](https://github.com/chrisdanford)
