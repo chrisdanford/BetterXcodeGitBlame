@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 set -euo pipefail  # http://redsymbol.net/articles/unofficial-bash-strict-mode/
 
-local_install_mode=0
+local_install=0
 for i in "$@" ; do
-    if [[ $i == "--local" ]] ; then
-        local_install_mode=1
-        break
-    fi
+  if [[ $i == "--local" ]] ; then
+    local_install=1
+    break
+  fi
 done
 
 REMOTE_INSTALL_GIT_URL="https://raw.githubusercontent.com/chrisdanford/BetterXcodeGitBlame/master/git"
 LOCAL_INSTALL_GIT_SOURCE="$(dirname $0)/git"
 
-if [[ local_install_mode -eq 0 ]]; then
+if [[ $local_install -eq 0 ]]; then
 	echo "BetterXcodeGitBlame is installing from remote source: $REMOTE_INSTALL_GIT_URL"
 else
 	echo "BetterXcodeGitBlame is installing from local source: $LOCAL_INSTALL_GIT_SOURCE"
@@ -23,26 +23,32 @@ XCODE_GIT="$XCODE_BIN_DIR/xcode-git"
 GIT="$XCODE_BIN_DIR/git"
 GIT_TEMP="/tmp/git-wrapper"
 
-if [ -f $XCODE_GIT ]; then
-   echo "Looks like we're already installed. File "$XCODE_GIT" already exists."
-   echo ""
-   echo "If you'd like to uninstall:"
-   echo "sudo mv -f $XCODE_GIT $GIT"
-   exit 0
+if [[ $local_install -eq 0 ]]; then
+  curl --output "$GIT_TEMP" "$REMOTE_INSTALL_GIT_URL"
+else
+  cp "$LOCAL_INSTALL_GIT_SOURCE" "$GIT_TEMP"
 fi
-if [[ local_install_mode -eq 0 ]]; then
-	curl --output "$GIT_TEMP" "$REMOTE_INSTALL_GIT_URL"
-fi
-echo ''
+
 echo "Location of the Xcode-packaged git: $XCODE_BIN_DIR"
 echo ''
+
+if [ -f $XCODE_GIT ]; then
+  echo "Looks like we're already installed. File "$XCODE_GIT" already exists."
+  echo ""
+
+  if [ $(md5 -q "$GIT_TEMP") = $(md5 -q "$GIT") ]; then
+    echo "The latest version is already installed."
+    echo "If you'd like to uninstall:"
+    echo "sudo mv -f '$XCODE_GIT' '$GIT'"
+    exit 0
+  else
+    echo "A newer version will be installed.  Uninstalling first..."
+    sudo mv -f "$XCODE_GIT" "$GIT"
+  fi
+fi
 echo 'WARNING: The contents of Xcode will be modified.'
 echo 'You may be prompted for your password. "sudo" is necessary to continue.'
 sudo -- mv "$GIT" "$XCODE_GIT"
-if [[ local_install_mode -eq 0 ]]; then
-	sudo -- mv "$GIT_TEMP" "$GIT"
-else
-	sudo -- cp "$LOCAL_INSTALL_GIT_SOURCE" "$GIT"	
-fi
+sudo -- mv "$GIT_TEMP" "$GIT"
 sudo -- chmod +x "$GIT"
 echo 'All done!'
