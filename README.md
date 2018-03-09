@@ -6,11 +6,29 @@
 
 *Warning*: This script modifies the conents of the Xcode package to wrap Xcode's internal version of git.
 
+*Warning*: If you upgrade Xcode, you will need to re-run this script to restore functionality.
+
 ```bash
 bash <(curl -s https://raw.githubusercontent.com/chrisdanford/BetterXcodeGitBlame/master/install)
 ```
 
-*Warning*: If you upgrade Xcode, you will need to re-run this script to restore functionality.
+Or, if you have a local copy of the repo:
+
+```bash
+./install --local
+```
+
+## Uninstallation
+
+```bash
+bash <(curl -s https://raw.githubusercontent.com/chrisdanford/BetterXcodeGitBlame/master/install) --uninstall
+```
+
+or
+
+```bash
+./install --uninstall
+```
 
 ## Overview
 
@@ -21,12 +39,6 @@ However, Xcode exposes no options to control what flags are passed to the `git b
 This installation script modified the Xcode-internal git to be wrapped by a shell script that passes some additional options for the `git blame` command:
 - `-w` to ignore whitespace-only changes
 - `-M` to ignore changes that only moved but didn't modify a line
-
-## Uninstallation
-
-```bash
-sudo mv -f "`xcode-select -p`/usr/bin/xcode-git" "`xcode-select -p`/usr/bin/git"
-```
 
 ## Authors
 - [Chris Danford](https://github.com/chrisdanford)
