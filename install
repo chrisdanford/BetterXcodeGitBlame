@@ -67,6 +67,8 @@ else
 
   sudo -- mv "$GIT" "$XCODE_GIT"
   sudo -- mv "$GIT_TEMP" "$GIT"
+  
+  # In the remote install case, the downloaded git script won't have execute permission.
   sudo -- chmod +x "$GIT"
 fi
 echo 'All done!'
