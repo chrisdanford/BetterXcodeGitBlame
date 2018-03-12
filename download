@@ -11,7 +11,7 @@ set -x
 
 DESTINATION="$1"
 
-TEMP=`mktemp "/tmp/BetterXcodeGitBlame.zip"`
+TEMP=`mktemp "/tmp/BetterXcodeGitBlameXXXXXXXX.zip"`
 URL="https://codeload.github.com/chrisdanford/BetterXcodeGitBlame/zip/master"
 
 # Clear the contents, if any, so that old files don't hang around.
