@@ -8,26 +8,26 @@ set -euo pipefail  # http://redsymbol.net/articles/unofficial-bash-strict-mode/
 # Xcode will pass arguments to git that look like:
 #   ls-remote --heads
 # or 
-#   -w -M -c color.ui=false -c core.pager= -c core.quotepath=false --no-pager blame --no-color --line-porcelain -- SomeFile.m
+#   -c color.ui=false -c core.pager= -c core.quotepath=false --no-pager blame --no-color --line-porcelain -- SomeFile.m
 # 
 # We want to inject out extra flags into any `blame` command.
 # We'll process each arg, inject our flags when we find the one `blame` (if any)
 # and not inject once we see the `--` separator because everything after
 # the separator are file names (and there could be legitimate files with 
 # the name `blame`).
-transformGitArgs () {
-	local e found_separator=0
-	for e; do
-		echo "$e"
-		if [[ "$found_separator" -eq 1 ]]; then
-			:
-		elif [[ "$e" == "--" ]]; then
-			found_separator=1
-		elif [[ "$e" == "blame" ]]; then
-			echo "-w -M"
-		fi
-	done
-}
+ARGS=()
+found_separator=0
+for var in "$@"; do
+    ARGS+=("$var")
+	if [[ "$found_separator" -eq 1 ]]; then
+		:
+	elif [[ "$var" == "--" ]]; then
+		found_separator=1
+	elif [[ "$var" == "blame" ]]; then
+	    ARGS+=("-w")
+	    ARGS+=("-M")
+	fi
+done
 
 DIR=$(dirname $0)
-"$DIR"/xcode-git $(transformGitArgs "$@")
+"$DIR"/xcode-git "${ARGS[@]}"
