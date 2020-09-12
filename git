@@ -29,5 +29,5 @@ for var in "$@"; do
 	fi
 done
 
-DIR=$(dirname $0)
-"$DIR"/xcode-git "${ARGS[@]}"
+XCODE_BIN_DIR="`xcode-select -p`/usr/bin"
+"$XCODE_BIN_DIR"/xcode-git "${ARGS[@]}"
